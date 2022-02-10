@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  tasks:
+  - name: start the k8s servers if not running
+    shell: VBoxManage startvm "{{ item }}" --type headless && sleep 3
+    with_items:
+      - kmaster
+      - knode1
+      - knode2
+      - knode3

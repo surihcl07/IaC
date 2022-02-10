@@ -1,0 +1,28 @@
+---
+ - hosts: dock
+   tasks:
+   - name: install docker needed packages
+     shell: yum install -y yum-utils device-mapper-persistent-data lvm2 
+     when:
+       - ansible_facts['distribution'] == "CentOS"
+       - ansible_facts['distribution_major_version'] == "7"
+
+   - name: configure the docker-ce repo
+     shell: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+   - name: install docker-ce
+     shell: yum -y install docker-ce
+
+   - name: set docker to start automatically at boot time
+     shell: systemctl enable docker.service
+
+   - name: start docker service
+     shell: systemctl start docker.service
+
+   - name: check the docker installation 
+     shell: docker run hello-world
+     register: helloworld
+
+   - debug:
+       msg: "{{ helloworld.stdout }}"
+

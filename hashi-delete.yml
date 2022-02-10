@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  tasks:
+  - name: delete hashicorp servers if not running
+    shell: VBoxManage unregistervm "{{ item }}" --delete
+    with_items:
+      - hashi1
+      - hashi2
+      - hashi3

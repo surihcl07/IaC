@@ -1,0 +1,16 @@
+---
+- hosts: localhost
+  tasks:
+  - name: start hashicorp servers if not running
+    shell: VBoxManage clonevm clone-cent7 --basefolder='/home/surendra/VirtualBox VMs/hashicorp' '--name={{ item }}' --register
+    with_items:
+      - hashi1
+      - hashi2
+      - hashi3
+
+  - name: Power-On the VM's if not powered on
+    shell: VBoxManage startvm "{{ item }}" --type headless && sleep 3
+    with_items:
+      - hashi1
+      - hashi2
+      - hashi3

@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  tasks:
+  - name: stop dockers 
+    shell: VBoxManage controlvm "{{ item }}" poweroff
+    with_items:
+      - dock1
+      - dock2

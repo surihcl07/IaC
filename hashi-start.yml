@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  tasks:
+  - name: start hashicorp servers if not running
+    shell: VBoxManage startvm "{{ item }}" --type headless && sleep 3
+    with_items:
+      - hashi1
+      - hashi2
+      - hashi3

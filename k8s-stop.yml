@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  tasks:
+  - name: stop the k8s servers if running
+    shell: VBoxManage controlvm "{{ item }}" poweroff
+    with_items:
+      - kmaster
+      - knode1
+      - knode2
+      - knode3

@@ -1,0 +1,13 @@
+---
+ - hosts: all
+   gather_facts: no
+   vars_prompt:
+     - name: "server"
+       prompt: "enter server name:"
+   tasks:
+     - name: shutdown "{{ server }}"
+       command: /sbin/shutdown -h now
+       delegate_to: "{{ server }}"
+
+     - name: wait go down
+       local_action: wait_for host={{ server }} port=22 state=stopped

@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  tasks:
+  - name: start the docker servers if not running
+    shell: VBoxManage startvm "{{ item }}" --type headless
+    with_items:
+      - dock1
+      - dock2
