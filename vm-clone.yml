@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  tasks:
+  - name: start hashicorp servers if not running
+    shell: VBoxManage clonevm clone-cent7 --basefolder='/home/surendra/VirtualBox VMs/hashicorp' '--name={{ item }}' --register
+    with_items:
+      - "{{ vm }}"
+
+  - name: Power-On the VM's if not powered on
+    shell: VBoxManage startvm "{{ item }}" --type headless && sleep 3
+    with_items:
+      - "{{ vm }}"
+
+  - name: Wait 300 seconds for port 22 to become open and contain "OpenSSH"
+    wait_for:
+      port: 22
+      host: '{{ vm }}'
+      search_regex: OpenSSH
+      delay: 3
+    connection: local

@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  tasks:
+  - name: stop hashicorp servers if running
+    shell: VBoxManage controlvm "{{ item }}" poweroff
+    with_items:
+      - "{{ vm }}"
